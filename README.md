@@ -4,6 +4,8 @@
 ```
 .
 ├── README.md
+├── images/
+│   └── vpc-architecture.png  
 ├── vpc1-nginx/
 │   └── userdata.sh        # VPC-1 Nginx 시작 템플릿 (index.html, 메인 대시보드)
 ├── vpc1-fastapi/
