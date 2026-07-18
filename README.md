@@ -55,26 +55,14 @@ Private 서브넷에는 EC2 인스턴스(Nginx/FastAPI)를 배치했다.
 사용자
   ↓ (Route 53: www.kkhwan.cloud)
 외부 ALB (std5-lb)
-  ├─ "/", "/board"      → VPC-1 내부 ALB → VPC-1 Nginx/FastAPI
+  ├─ "/", "/board"        → VPC-1 내부 ALB → VPC-1 Nginx/FastAPI
   └─ "/company", "/guest" → VPC-3 내부 ALB → VPC-3 Nginx/FastAPI
-                                                      ↓
-                                    VPC Peering (1↔2, 2↔3, 1↔3)
-                                                      ↓
-                                        VPC-2: RDS Proxy → Aurora MySQL
+                                       ↓
+                            VPC Peering (1↔2, 2↔3, 1↔3)
+                                       ↓
+                            VPC-2: RDS Proxy → Aurora MySQL
 ```
 
-### 인프라 구축 순서
-
-1. 각 가용영역 VPC와 서브넷, IGW, NAT 생성 (VPC 3개)
-2. VPC간 피어링 3개 생성 (1↔2, 2↔3, 1↔3) + 라우팅 테이블 6개 편집 + 핑 테스트로 연결 확인
-3. RDS(Aurora, Multi-AZ) 클러스터 생성
-4. RDS Proxy 생성 (IAM 역할 + Secrets Manager 보안 암호 연동), DB/테이블 생성
-5. Golden AMI 1개 생성
-6. 시작 템플릿 4개 생성 (VPC-1 Nginx, VPC-1 FastAPI, VPC-3 Nginx, VPC-3 FastAPI)
-7. 대상 그룹 생성 (VPC별 Nginx/FastAPI + 외부 ALB용 2개)
-8. 로드밸런서 생성 (내부 ALB 2개 + 외부 ALB 1개)
-9. Auto Scaling Group 생성
-10. Route 53으로 도메인 연결
 
 ## 핵심 설계 포인트
 
