@@ -17,7 +17,7 @@ VPC-3   회사소개(/company) + 방명록(/guest) — FastAPI, Nginx, ASG
 ```
 
 ## 아키텍처
-![VPC 구성도](./images/vpc-architecture.png)
+![VPC 구성도](./images/VPC_Connect_구성도_박스삭제.png)
 ### VPC / 서브넷 구성
 
 | VPC | CIDR | 용도 |
